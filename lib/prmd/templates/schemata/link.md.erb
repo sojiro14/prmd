@@ -69,7 +69,7 @@ HTTP/1.1 <%=
 <%- if response_example %>
 <%=   response_example['body'] %>
 <%- else %>
-<%-   if link['rel'] == 'empty' %>
+<%-   if link['rel'] == 'empty' || link['rel'] == 'delete' %>
 <%-   elsif link.has_key?('targetSchema') %>
 <%=     JSON.pretty_generate(schema.schema_example(link['targetSchema'])) %>
 <%-   elsif link['rel'] == 'instances' %>
