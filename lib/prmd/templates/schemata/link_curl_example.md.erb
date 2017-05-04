@@ -13,13 +13,12 @@
         end
       end
     end
-    if link['method'].upcase != 'GET' && link['method'].upcase != 'DELETE'
-      options = options.dup
-      options[:http_header] = { 'Content-Type' => options[:content_type] }.merge(options[:http_header])
-    end
     if link.has_key?('encType')
       options = options.dup
       options[:http_header] = { 'Content-Type' => link['encType'] }.merge(options[:http_header])
+    elsif link['method'].upcase != 'GET' && link['method'].upcase != 'DELETE'
+      options = options.dup
+      options[:http_header] = { 'Content-Type' => options[:content_type] }.merge(options[:http_header])
     end
   %>
 
