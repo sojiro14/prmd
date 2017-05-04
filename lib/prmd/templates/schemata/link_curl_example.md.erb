@@ -7,13 +7,19 @@
     if link.has_key?('schema')
       data = schema.schema_example(link['schema'])
 
-      if link['encType'] == 'application/x-www-form-urlencoded' && !data.nil?
-        form_params << Prmd::UrlGenerator.new({schema: schema, link: link, options: options}).url_params
+      if !data.nil?
+        if link['encType'] == 'application/x-www-form-urlencoded' || link['method'].upcase == 'GET'
+          form_params << Prmd::UrlGenerator.new({schema: schema, link: link, options: options}).url_params
+        end
       end
     end
     if link['method'].upcase != 'GET' && link['method'].upcase != 'DELETE'
       options = options.dup
       options[:http_header] = { 'Content-Type' => options[:content_type] }.merge(options[:http_header])
+    end
+    if link.has_key?('encType')
+      options = options.dup
+      options[:http_header] = { 'Content-Type' => link['encType'] }.merge(options[:http_header])
     end
   %>
 
